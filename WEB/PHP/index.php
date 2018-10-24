@@ -15,10 +15,11 @@
 			<label>Introduce la contraseña</label><input type="password" name="pass">
 			<div class="error_login">
 			<?php
+
 			if (isset($_REQUEST['err'])) {
-				# code...
-			}
 				echo "El usuario o la contraseña son incorrectos";
+			}
+				
 			?>
 			</div>
 			<input type="submit" name="submit">
