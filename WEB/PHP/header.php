@@ -1,13 +1,13 @@
 <html>
 <head>
-	<link href="headcss.css" rel="stylesheet" type="text/css" />
+	<link href="../CSS/headcss.css" rel="stylesheet" type="text/css" />
 </head>
 <body>
 	<nav>
 	<div class="todo">
 		<div class="imagen">
 			<br>
-			<img src="prueba.jpg"width="110" height="40"/>
+			<img src="../images/prueba.jpg"width="110" height="40"/>
 		</div>
 		<a href='Misreservas.php'>Mis Reservas</a>
 		<a href='Reservas.php'>Reservas</a>
@@ -16,12 +16,12 @@
             </li>
             <li><a href="#">Hola
             	<?php
-            	$_SESSION['nombre']="manu";
+            	session_start();
 				echo $_SESSION['nombre'];
 				?> 
 				</a>
                 <ul>
-                    <li><a href="#">Cerrar sesion</a></li>
+                    <li><a href="index.php">Cerrar sesion</a></li>
                 </ul>
 
             </li>

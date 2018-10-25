@@ -1,0 +1,33 @@
+body {
+	background-image: url("../images/background_index.jpg");
+}
+
+::placeholder{
+	text-align: center;
+}
+
+.centrado img {
+	margin-bottom: 15px;
+}
+
+.centrado {
+	background-color: rgba(255,255,255,0.8);
+	padding-top: 15px;
+	padding-bottom: 3%;
+	margin-top: 10%;
+	margin-left: 35%;
+	margin-right: 35%;
+	text-align: center;
+	border-radius: 5px;
+}
+
+.centrado input{
+	background-color: rgba(255,255,255,0.8);
+	font-size: 16px;
+	border-radius: 3px;
+}
+
+.error_login {
+	height: 25px;
+	color: red;
+}

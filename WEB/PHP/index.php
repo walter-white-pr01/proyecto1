@@ -2,26 +2,30 @@
 <html>
 <head>
 	<title>Login</title>
+	<script type="text/javascript" src="../JS/functions.js"></script>
+	<link rel="stylesheet" type="text/css" href="../CSS/stylesheet_index.css">
 </head>
 <body>
 <!-- Llamamos al Header -->	
-<?php 
+<!-- <?php 
 	include 'header.php';
 ?>
-<div>
-	<div>
+ -->
+<div class="centrado">
+	<img src="../images/logo_index.png">
+	<div class="text_centrado">
 		<form method="POST" action="login.proc.php" onsubmit="validate()">
-			<label>Introduce el usuario/email</label><input type="text" name="user">
-			<label>Introduce la contraseña</label><input type="password" name="pass">
+			<label></label><input type="text" name="user" placeholder="Usuario/Email"><br><br>
+			<label></label><input type="password" name="pass" placeholder="Contraseña"><br><br>
 			<div class="error_login">
 			<?php
 
 			if (isset($_REQUEST['err'])) {
-				echo "El usuario o la contraseña son incorrectos";
+				echo "<b>El usuario o la contraseña son incorrectos</b>";
 			}
 				
 			?>
-			</div>
+			</div><br>
 			<input type="submit" name="submit">
 		</form>
 	</div>

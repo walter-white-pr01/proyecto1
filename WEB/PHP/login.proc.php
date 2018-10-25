@@ -1,7 +1,7 @@
 <?php
 
 include 'conection.php';
-
+session_start();
 $user = $_REQUEST['user'];
 $pass = $_REQUEST['pass'];
 
@@ -13,10 +13,9 @@ echo "$q";
 
 if (mysqli_num_rows($q_usuarios)>0) {
 	$array = mysqli_fetch_array($q_usuarios);
-	session_start();
-	$_SESSION['nombre']=$user;
-	$_SESSION['id']=$array[''];
-	header('Location: misreservas.php');
+	$_SESSION['nombre']=$array['user_name'];
+	$_SESSION['id']=$array['user_id'];
+	header('Location: reservar.php');
 }else{
 	header('Location: index.php?err=1');
 }
