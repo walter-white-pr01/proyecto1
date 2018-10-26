@@ -8,7 +8,7 @@
 <body>
 	<?php include "header.php" ?>
 
-	<div>
+	<div class="centrado">
 		<?php 
 
 		include 'reservar.proc.php';

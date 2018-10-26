@@ -14,9 +14,9 @@
 <div class="centrado">
 	<img src="../images/logo_index.png">
 	<div class="text_centrado">
-		<form method="POST" action="login.proc.php" onsubmit="validate()">
-			<label></label><input type="text" name="user" placeholder="Usuario/Email"><br><br>
-			<label></label><input type="password" name="pass" placeholder="Contraseña"><br><br>
+		<form method="POST" name="loggin" action="login.proc.php" onsubmit="return validate()">
+			<label></label><input type="text" id="user" name="user" placeholder="Usuario/Email"><br><br>
+			<label></label><input type="password" id="pass" name="pass" placeholder="Contraseña"><br><br>
 			<div class="error_login">
 			<?php
 

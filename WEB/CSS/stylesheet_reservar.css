@@ -1,0 +1,71 @@
+
+body{
+	background-color: #1e8449;
+}
+
+.centrado {
+	width: 85%;
+	background-color: white;
+	margin: 0 auto;
+}
+
+.centrado h2{
+	margin-top: 0;
+}
+
+.centrado p{
+	margin-bottom: 0;
+}
+
+.centrado .img {
+	width: 300px;
+	height: 200px;
+	background-size: cover !important;
+	background-position: center !important;
+	float: left;
+}
+
+.centrado .text {
+/*	float: right;
+*/}
+
+.centrado .img2 {
+	width: 300px;
+	height: 200px;
+	background-size: cover !important;
+	background-position: center !important;
+	float: right;
+}
+
+.centrado .text2 {
+	float: left;
+}
+
+.hiper {
+	display: block;
+	overflow: hidden;
+	text-decoration: none;
+
+}
+
+.impar, .par,  {
+	padding: 40px;
+}
+
+.text, .text2, .img, .img2 {
+	margin: 10px;
+}
+
+.text, .text2 {
+	font-family: "Courier New", Courier, monospace;
+	color: black;
+	padding: 0px;
+}
+
+.text2 {
+	width: 60%;
+}
+
+.paginado {
+	text-align: center;	
+}
