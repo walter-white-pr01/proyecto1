@@ -5,21 +5,22 @@ include 'conection.php';
 
 
 if (isset($_REQUEST['pag'])) {
-	$paginado = $_REQUEST['pag'];
-	$limit_pag = $paginado*3 - 3;
+	$pag = $_REQUEST['pag'];
+	$limit_pag = $pag*3 - 3;
 }else{
-	$limit_pag = 0;
+	$limit_pag = 3;
 }
 
-if (isset($busqueda)) {
+if (isset($_REQUEST['busqueda'])) {
+	$busqueda = $_REQUEST['busqueda'];
 	$q = "SELECT * FROM recurso WHERE nom_recur LIKE '%$busqueda%' OR descripcion AND disponibilidad=0 LIKE '%$busqueda%' ORDER BY 'ASC' LIMIT $limit_pag,3";
 	$q_recursos = mysqli_query($link, $q);
 	$recur_array = mysqli_fetch_array($q_recursos);
 	$limit = mysqli_num_rows($q_recursos);
 	$t = $limit/3;
 }else{
-	$q = "SELECT * FROM recurso ORDER BY 'ASC' WHERE disponibilidad=0 LIMIT $limit_pag,3";
-	$r = "SELECT * FROM recurso ORDER BY 'ASC'";
+	$q = "SELECT * FROM recurso WHERE disponibilidad=0 ORDER BY 'ASC' LIMIT $limit_pag,3";
+	$r = "SELECT * FROM recurso WHERE disponibilidad=0 ORDER BY 'ASC'";
 	$q_recursos = mysqli_query($link, $q);
 	$r_query = mysqli_query($link, $r);
 	$limit = mysqli_num_rows($r_query);
@@ -50,20 +51,74 @@ while ($recur_array=mysqli_fetch_array($q_recursos)) {
 $cont++;
 }
 
-// PAGINADO
-echo "<div class='paginado'>";
-if (isset($_REQUEST['pag'])) {
-	$t=ceil($t);
-for ($c=$paginado; $c < $t+1; $c++) { 
-	echo "<a href='reservar.php?pag=$c'>".$c."</a>";
-}
-}else{
-	$t=ceil($t);
-for ($c=1; $c < $t+1; $c++) { 
 
-	echo "<a href='reservar.php?pag=$c'>".$c."</a>";
+
+// EMPIEZA PAGINADO //
+echo "<div class='paginado'>";
+echo "<a href='reservar.php'><<</a> ";
+
+$limite = ceil($t);
+if (isset($_REQUEST['pag'])) {
+
+	if ($limite==$pag || $limite-1==$pag) {
+		if ($pag==$limite) {
+			for ($num=$pag-4; $num < $pag; $num++) { 
+			if ($num==1) {
+				echo "<a href='reservar.php'>".$num."</a> ";
+			}elseif ($num==0) {
+				echo "";
+			}else{
+			echo "<a href='reservar.php?pag=$num'>".$num."</a> ";
+			}
+		}
+		}else{
+		for ($num=$pag-3; $num < $pag; $num++) { 
+			if ($num==1) {
+				echo "<a href='reservar.php'>".$num."</a> ";
+			}elseif ($num==0) {
+				echo "";
+			}else{
+			echo "<a href='reservar.php?pag=$num'>".$num."</a> ";
+			}
+		}
+	}
+	}else{
+	for ($num=$pag-2; $num < $pag; $num++) { 
+		if ($num==1) {
+			echo "<a href='reservar.php'>".$num."</a> ";
+		}elseif ($num==0) {
+			echo "";
+		}else{
+		echo "<a href='reservar.php?pag=$num'>".$num."</a> ";
+		}
+	}
+	}
+
+	if ($limite==$pag || $limite-1==$pag) {
+		if ($limite==$pag) {
+			echo "<a href='reservar.php?pag=$num'>".$pag."</a> ";
+		}else{
+			echo "<a href='reservar.php?pag=$num'>".$pag."</a> ";
+			$pag++;
+			echo "<a href='reservar.php?pag=$pag'>".$pag."</a> ";
+		}
+		
+		}elseif ($pag==2){
+			for ($num=$pag; $num < $pag+4; $num++) { 
+			echo "<a href='reservar.php?pag=$num'>".$num."</a> ";
+		}
+	}else{
+			for ($num=$pag; $num < $pag+3; $num++) { 
+			echo "<a href='reservar.php?pag=$num'>".$num."</a> ";
+		}
+	}
+}else{
+	for ($num=1; $num < 6; $num++) { 
+		echo "<a href='reservar.php?pag=$num'>".$num."</a> ";
+	}
 }
-}
+echo " <a href='reservar.php?pag=$limite'>>></a>";
+// ACABA PAGINADO //
 echo "</div>";
 
 ?>

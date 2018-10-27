@@ -9,6 +9,9 @@
 	<?php include "header.php" ?>
 
 	<div class="centrado">
+		<form action="reservar.php">
+			<input type="text" name="busqueda" placeholder="Búsqueda avanzada">
+		</form>
 		<?php 
 
 		include 'reservar.proc.php';
