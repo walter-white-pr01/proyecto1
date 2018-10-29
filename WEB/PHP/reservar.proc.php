@@ -2,30 +2,66 @@
 
 include 'conection.php';
 
-
+if (isset($_REQUEST['vista'])) {
+	$vista = $_REQUEST['vista'];
+}else{
+	$vista = 3;
+}
 
 if (isset($_REQUEST['pag'])) {
 	$pag = $_REQUEST['pag'];
-	$limit_pag = $pag*3 - 3;
+	$limit_pag = $pag*$vista - $vista;
 }else{
 	$limit_pag = 0;
 }
 
 if (isset($_REQUEST['busqueda'])) {
 	$busqueda = $_REQUEST['busqueda'];
-	$q = "SELECT * FROM recurso WHERE disponibilidad=0 AND (nom_recur LIKE '%$busqueda%' OR descripcion LIKE '%$busqueda%') ORDER BY 'ASC' LIMIT $limit_pag,3";
-	$r = "SELECT * FROM recurso WHERE disponibilidad=0 AND (nom_recur LIKE '%$busqueda%' OR descripcion LIKE '%$busqueda%') ORDER BY 'ASC'";
+	if ($vista == "all") {
+		if (isset($_REQUEST['cate'])) {
+			$cate = $_REQUEST['cate'];
+			if ($cate!="") {
+				$q = "SELECT * FROM recurso WHERE disponibilidad=0 AND categoria=$cate AND (nom_recur LIKE '%$busqueda%' OR descripcion LIKE '%$busqueda%') ORDER BY 'ASC'";
+				$r = "SELECT * FROM recurso WHERE disponibilidad=0 AND categoria=$cate AND (nom_recur LIKE '%$busqueda%' OR descripcion LIKE '%$busqueda%') ORDER BY 'ASC'";
+			}else{
+				$q = "SELECT * FROM recurso WHERE disponibilidad=0 AND (nom_recur LIKE '%$busqueda%' OR descripcion LIKE '%$busqueda%') ORDER BY 'ASC'";
+				$r = "SELECT * FROM recurso WHERE disponibilidad=0 AND (nom_recur LIKE '%$busqueda%' OR descripcion LIKE '%$busqueda%') ORDER BY 'ASC'";
+			}
+
+		}else{
+
+			$q = "SELECT * FROM recurso WHERE disponibilidad=0 AND (nom_recur LIKE '%$busqueda%' OR descripcion LIKE '%$busqueda%') ORDER BY 'ASC' LIMIT $limit_pag,$vista";
+			$r = "SELECT * FROM recurso WHERE disponibilidad=0 AND (nom_recur LIKE '%$busqueda%' OR descripcion LIKE '%$busqueda%') ORDER BY 'ASC'";
+		}
+	}else{
+	if (isset($_REQUEST['cate'])) {
+		$cate = $_REQUEST['cate'];
+		if ($cate!="") {
+			$q = "SELECT * FROM recurso WHERE disponibilidad=0 AND categoria=$cate AND (nom_recur LIKE '%$busqueda%' OR descripcion LIKE '%$busqueda%') ORDER BY 'ASC' LIMIT $limit_pag,$vista";
+			$r = "SELECT * FROM recurso WHERE disponibilidad=0 AND categoria=$cate AND (nom_recur LIKE '%$busqueda%' OR descripcion LIKE '%$busqueda%') ORDER BY 'ASC'";
+		}else{
+			$q = "SELECT * FROM recurso WHERE disponibilidad=0 AND (nom_recur LIKE '%$busqueda%' OR descripcion LIKE '%$busqueda%') ORDER BY 'ASC' LIMIT $limit_pag,$vista";
+			$r = "SELECT * FROM recurso WHERE disponibilidad=0 AND (nom_recur LIKE '%$busqueda%' OR descripcion LIKE '%$busqueda%') ORDER BY 'ASC'";
+		}
+
+	}else{
+
+		$q = "SELECT * FROM recurso WHERE disponibilidad=0 AND (nom_recur LIKE '%$busqueda%' OR descripcion LIKE '%$busqueda%') ORDER BY 'ASC' LIMIT $limit_pag,$vista";
+		$r = "SELECT * FROM recurso WHERE disponibilidad=0 AND (nom_recur LIKE '%$busqueda%' OR descripcion LIKE '%$busqueda%') ORDER BY 'ASC'";
+	}
+}
 	$q_recursos = mysqli_query($link, $q);
 	$r_recursos = mysqli_query($link, $r);
 	$limit = mysqli_num_rows($r_recursos);
-	$t = $limit/3;	
+	$t = $limit/$vista;	
+
 }else{
-	$q = "SELECT * FROM recurso WHERE disponibilidad=0 ORDER BY 'ASC' LIMIT $limit_pag,3";
+	$q = "SELECT * FROM recurso WHERE disponibilidad=0 ORDER BY 'ASC' LIMIT $limit_pag,$vista";
 	$r = "SELECT * FROM recurso WHERE disponibilidad=0 ORDER BY 'ASC'";
 	$q_recursos = mysqli_query($link, $q);
 	$r_query = mysqli_query($link, $r);
 	$limit = mysqli_num_rows($r_query);
-	$t = $limit/3;
+	$t = $limit/$vista;
 }
 $cont = 0;
 while ($recur_array=mysqli_fetch_array($q_recursos)) {
@@ -52,124 +88,155 @@ $cont++;
 }
 
 
-
+if ($vista=="all") {
+	echo "";
+}else{
 // EMPIEZA PAGINADO //
 echo "<div class='paginado'>";
-echo "<a href='reservar.php'><<</a> ";
 
 $limite = ceil($t);
 if (isset($_REQUEST['pag'])) {
 	if (isset($busqueda)) {
+		echo "<a href='reservar.php?busqueda=$busqueda&vista=$vista'><<</a> ";
 		if ($limite==$pag || $limite-1==$pag) {
 			if ($pag==$limite) {
-				for ($num=$pag-4; $num < $pag; $num++) { 
+				for ($num=$pag-$limite; $num < $pag; $num++) { 
 				if ($num==1) {
-					echo "<a href='reservar.php?busqueda=$busqueda'>".$num."</a> ";
+					echo "<a href='reservar.php?busqueda=$busqueda&vista=$vista'>".$num."</a> ";
 				}elseif ($num==0) {
 					echo "";
 				}else{
-				echo "<a href='reservar.php?pag=$num&busqueda=$busqueda'>".$num."</a> ";
+				echo "<a href='reservar.php?pag=$num&busqueda=$busqueda&vista=$vista'>".$num."</a> ";
 				}
 			}
 			}else{
-			for ($num=$pag-3; $num < $pag; $num++) { 
+			for ($num=$pag-2; $num < $pag; $num++) { 
 				if ($num==1) {
-					echo "<a href='reservar.php?busqueda=$busqueda'>".$num."</a> ";
+					echo "<a href='reservar.php?busqueda=$busqueda&vista=$vista'>".$num."</a> ";
 				}elseif ($num==0) {
 					echo "";
 				}else{
-				echo "<a href='reservar.php?pag=$num&busqueda=$busqueda'>".$num."</a> ";
+				echo "<a href='reservar.php?pag=$num&busqueda=$busqueda&vista=$vista'>".$num."</a> ";
 				}
 			}
 		}
 		}else{
 			for ($num=$pag-2; $num < $pag; $num++) { 
 				if ($num==1) {
-					echo "<a href='reservar.php?busqueda=$busqueda'>".$num."</a> ";
+					echo "<a href='reservar.php?busqueda=$busqueda&vista=$vista'>".$num."</a> ";
 				}elseif ($num==0) {
 					echo "";
 				}else{
-				echo "<a href='reservar.php?pag=$num&busqueda=$busqueda'>".$num."</a> ";
+				echo "<a href='reservar.php?pag=$num&busqueda=$busqueda&vista=$vista'>".$num."</a> ";
 				}
 			}
 		}
-	}else{
-		if ($limite==$pag || $limite-1==$pag) {
-			if ($pag==$limite) {
-				for ($num=$pag-4; $num < $pag; $num++) { 
-				if ($num==1) {
-					echo "<a href='reservar.php'>".$num."</a> ";
-				}elseif ($num==0) {
-					echo "";
-				}else{
-				echo "<a href='reservar.php?pag=$num'>".$num."</a> ";
-				}
-			}
-			}else{
-			for ($num=$pag-3; $num < $pag; $num++) { 
-				if ($num==1) {
-					echo "<a href='reservar.php'>".$num."</a> ";
-				}elseif ($num==0) {
-					echo "";
-				}else{
-				echo "<a href='reservar.php?pag=$num'>".$num."</a> ";
-				}
-			}
-		}
-		}else{
-			for ($num=$pag-2; $num < $pag; $num++) { 
-				if ($num==1) {
-					echo "<a href='reservar.php'>".$num."</a> ";
-				}elseif ($num==0) {
-					echo "";
-				}else{
-				echo "<a href='reservar.php?pag=$num'>".$num."</a> ";
-				}
-			}
-		}
-	}
-	if ($limite==$pag || $limite-1==$pag) {
+			if ($limite==$pag || $limite-1==$pag) {
 		if ($limite==$pag) {
-			echo "<a href='reservar.php?pag=$num'>".$pag."</a> ";
+			echo "<a href='reservar.php?pag=$num&busqueda=$busqueda&vista=$vista'>".$pag."</a> ";
 		}else{
-			echo "<a href='reservar.php?pag=$num'>".$pag."</a> ";
+			echo "<a href='reservar.php?pag=$num&busqueda=$busqueda&vista=$vista'>".$pag."</a> ";
 			$pag++;
-			echo "<a href='reservar.php?pag=$pag'>".$pag."</a> ";
+			echo "<a href='reservar.php?pag=$pag&busqueda=$busqueda&vista=$vista'>".$pag."</a> ";
 		}
 		
 	}elseif ($pag==2){
 		for ($num=$pag; $num < $pag+4; $num++) { 
-		echo "<a href='reservar.php?pag=$num'>".$num."</a> ";
+		echo "<a href='reservar.php?pag=$num&busqueda=$busqueda&vista=$vista'>".$num."</a> ";
 		}
 	
 
 	}else{
 			for ($num=$pag; $num < $pag+3; $num++) { 
-			echo "<a href='reservar.php?pag=$num'>".$num."</a> ";
+			echo "<a href='reservar.php?pag=$num&busqueda=$busqueda&vista=$vista'>".$num."</a> ";
 		}
 	}
-}else{
-	if (isset($busqueda)) {
-		for ($num=1; $num < $limite+1; $num++) { 
-		if ($num==1) {
-			echo "<a href='reservar.php?busqueda=$busqueda'>".$num."</a> ";
-		}else{
-		echo "<a href='reservar.php?pag=$num&busqueda=$busqueda'>".$num."</a> ";
-		}
-	}
+	echo " <a href='reservar.php?pag=$limite&busqueda=$busqueda&vista=$vista'>>></a>";
 	}else{
-		for ($num=1; $num < $limite+1; $num++) { 
-			if ($num==1) {
-				echo "<a href='reservar.php?'>".$num."</a> ";
+		echo "<a href='reservar.php'><<</a> ";
+		if ($limite==$pag || $limite-1==$pag) {
+			if ($pag==$limite) {
+				for ($num=$pag-4; $num < $pag; $num++) { 
+				if ($num==1) {
+					echo "<a href='reservar.php?vista=$vista'>".$num."</a> ";
+				}elseif ($num==0) {
+					echo "";
+				}else{
+				echo "<a href='reservar.php?pag=$num&vista=$vista'>".$num."</a> ";
+				}
+			}
 			}else{
-			echo "<a href='reservar.php?pag=$num'>".$num."</a> ";
+			for ($num=$pag-3; $num < $pag; $num++) { 
+				if ($num==1) {
+					echo "<a href='reservar.php?vista=$vista'>".$num."</a> ";
+				}elseif ($num==0) {
+					echo "";
+				}else{
+				echo "<a href='reservar.php?pag=$num&vista=$vista'>".$num."</a> ";
+				}
 			}
 		}
+		}else{
+			for ($num=$pag-2; $num < $pag; $num++) { 
+				if ($num==1) {
+					echo "<a href='reservar.php?vista=$vista'>".$num."</a> ";
+				}elseif ($num==0) {
+					echo "";
+				}else{
+				echo "<a href='reservar.php?pag=$num&vista=$vista'>".$num."</a> ";
+				}
+			}
+		}
+		if ($limite==$pag || $limite-1==$pag) {
+		if ($limite==$pag) {
+			echo "<a href='reservar.php?pag=$num&vista=$vista'>".$pag."</a> ";
+		}else{
+			echo "<a href='reservar.php?pag=$num&vista=$vista'>".$pag."</a> ";
+			$pag++;
+			echo "<a href='reservar.php?pag=$pag&vista=$vista'>".$pag."</a> ";
+		}
+		
+	}elseif ($pag==2){
+		for ($num=$pag; $num < $pag+4; $num++) { 
+		echo "<a href='reservar.php?pag=$num&vista=$vista'>".$num."</a> ";
+		}
+	
+
+	}else{
+			for ($num=$pag; $num < $pag+3; $num++) { 
+			echo "<a href='reservar.php?pag=$num&vista=$vista'>".$num."</a> ";
+		}
+	}
+	echo " <a href='reservar.php?pag=$limite&vista=$vista'>>></a>";
+	}
+
+}else{
+
+	if (isset($busqueda)) {
+		echo "<a href='reservar.php?busqueda=$busqueda&vista=$vista'><<</a> ";
+		for ($num=1; $num < $limite+1; $num++) { 
+		if ($num==1) {
+			echo "<a href='reservar.php?busqueda=$busqueda&vista=$vista'>".$num."</a> ";
+		}else{
+		echo "<a href='reservar.php?pag=$num&busqueda=$busqueda&vista=$vista'>".$num."</a> ";
+		}
+	}
+	echo " <a href='reservar.php?pag=$limite&busqueda=$busqueda&vista=$vista'>>></a>";
+	}else{
+		echo "<a href='reservar.php?&vista=$vista'><<</a> ";
+		for ($num=1; $num < $limite+1; $num++) { 
+			if ($num==1) {
+				echo "<a href='reservar.php?vista=$vista'>".$num."</a> ";
+			}else{
+			echo "<a href='reservar.php?pag=$num&vista=$vista'>".$num."</a> ";
+			}
+		}
+		echo " <a href='reservar.php?pag=$limite&vista=$vista'>>></a>";
 	}
 }
 
-echo " <a href='reservar.php?pag=$limite'>>></a>";
 // ACABA PAGINADO //
+}
 echo "</div>";
 
 ?>
