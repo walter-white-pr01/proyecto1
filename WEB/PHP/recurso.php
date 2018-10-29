@@ -10,8 +10,8 @@
 	<?php
 session_start();
 $_SESSION['id']=1;
-$link = mysqli_connect('172.24.17.144', 'Marc', '159753', 'bd_casal_ww');
-//$recurso=$_REQUEST['id_elegido'];
+$link = mysqli_connect('172.24.16.11', 'walter', '1234', 'bd_casal_ww');
+$recurso=$_REQUEST['id_elegido'];
 $recurso=2;
 $query1 = "SELECT * FROM recurso WHERE id_recurso=$recurso";
 $q_recurso = mysqli_query($link, $query1);
@@ -26,6 +26,7 @@ $q_recurso = mysqli_query($link, $query1);
 					}else{
 						echo "<a href='#'>No disponible</a><br/>";
 					}
+					echo "<a href='incidencia.php?idrecurso=$rec[id_recurso]'>Informar de una incidencia</a>";
 					
 				}
 			}
