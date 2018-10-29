@@ -8,7 +8,6 @@
 <body>
 <?php include 'header.php'; ?>
 	<?php
-session_start();
 $_SESSION['id']=1;
 $link = mysqli_connect('172.24.17.144', 'Marc', '159753', 'bd_casal_ww');
 //$recurso=$_REQUEST['id_elegido'];
