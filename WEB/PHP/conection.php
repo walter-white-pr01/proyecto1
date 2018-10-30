@@ -1,8 +1,8 @@
 <?php
 
-$ip = "localhost";
-$user = "root";
-$pass = "";
+$ip = "172.24.17.144";
+$user = "Marc";
+$pass = "159753";
 $db = "bd_casal_ww";
 
 

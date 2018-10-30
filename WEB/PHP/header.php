@@ -9,6 +9,9 @@
 		$id= $_SESSION['id'];
 		echo "<title>Mis Reservas | $user</title>";
 	?>
+	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.2/css/all.css" integrity="sha384-/rXc/GQVaYpyDdyxK+ecHPVYJSN9bmVFBvjA/9eOB+pb3F2w2N6fc5qB9Ew5yIns" crossorigin="anonymous">
+
+
 </head>
 <body>
 	<nav>
@@ -26,6 +29,7 @@
             	<?php
             	// session_start();
 				echo $_SESSION['nombre'];
+
 				?> 
 				</a>
                 <ul>
