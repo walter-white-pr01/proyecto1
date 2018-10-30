@@ -1,6 +1,6 @@
 <?php
-$link = mysqli_connect('172.24.16.11', 'walter', '1234', 'bd_casal_ww');
-//include 'conection.php';
+// $link = mysqli_connect('172.24.16.11', 'walter', '1234', 'bd_casal_ww');
+include 'conection.php';
 session_start();
 $user = $_REQUEST['user'];
 $pass = $_REQUEST['pass'];

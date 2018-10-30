@@ -1,0 +1,14 @@
+body{
+	margin: 0px;
+}
+.centrar{
+	display: flex;
+	justify-content: center;
+}
+.ancho{
+	width: 1200px;
+}
+.tarjeta{
+	width: 90%;
+	min-height: 50px;
+}

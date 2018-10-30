@@ -1,6 +1,6 @@
 <?php
 session_start();
-$link = mysqli_connect('172.24.16.11', 'walter', '1234', 'bd_casal_ww');
+include "conection.php";
 //Asunto de la incidencia
 $asunto=$_REQUEST['asunto'];
 //Id del usuario

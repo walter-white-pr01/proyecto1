@@ -1,5 +1,5 @@
 <?php
-$link = mysqli_connect('172.24.16.11', 'walter', '1234', 'bd_casal_ww');
+include "header.php";
 $q = "SELECT * FROM tipo_incidencia ORDER BY nom_incidencia";
 	$q_tipoincidencia = mysqli_query($link, $q);
 $idrecu=$_REQUEST['idrecurso'];

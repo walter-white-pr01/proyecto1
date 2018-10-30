@@ -3,7 +3,7 @@ session_start();
 //id de usuario
 $id=$_SESSION['id'];
 //conexion
-$link = mysqli_connect('172.24.16.11', 'walter', '1234', 'bd_casal_ww');
+include "header.php";
 //id de recurso
 $resu=$_REQUEST['idrecurso'];
 //fecha por partes
@@ -18,7 +18,7 @@ $segundos=$hoy['seconds'];
 $fecha=$año."-".$mes."-".$dia." ".$hora.":".$minutos.":".$segundos;
 //Consultas
 $sql="UPDATE recurso SET disponibilidad = 1 WHERE recurso.id_recurso = $resu";
-$sql2="INSERT INTO `reservas` (`id_reserva`, `id_user`, `id_recurso`, `fecha_ini`, `fecha_fin`) VALUES (NULL, $id, $resu, '$fecha', NULL)";
+$sql2="INSERT INTO `reservas` (`id_reserva`, `id_user`, `id_recurso`, `fecha_ini`, `fecha_fin`,`Estado`) VALUES (NULL, $id, $resu, '$fecha', NULL,0)";
 //Ejecucion de consultas
 mysqli_query($link,$sql);
 mysqli_query($link,$sql2);

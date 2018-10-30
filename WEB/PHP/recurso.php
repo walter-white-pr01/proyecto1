@@ -9,7 +9,6 @@
 <?php include 'header.php'; ?>
 	<?php
 $_SESSION['id']=1;
-$link = mysqli_connect('172.24.16.11', 'walter', '1234', 'bd_casal_ww');
 $recurso=$_REQUEST['id_elegido'];
 $recurso=2;
 $query1 = "SELECT * FROM recurso WHERE id_recurso=$recurso";

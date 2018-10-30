@@ -1,7 +1,9 @@
 <html>
 <head>
 	<link href="../CSS/headcss.css" rel="stylesheet" type="text/css" />
+	<link href="../CSS/misreservas.css" rel="stylesheet" type="text/css" />
 	<?php
+		include 'conection.php';
 		session_start();
 		$user= $_SESSION['nombre'];
 		$id= $_SESSION['id'];
