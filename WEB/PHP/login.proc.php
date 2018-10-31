@@ -8,8 +8,9 @@ $encriptada=md5($pass);
 
 
 
-$q = "SELECT * FROM users WHERE user_name='$user' OR user_mail='$user' AND user_password='$encriptada'";
+$q = "SELECT * FROM users WHERE (user_name='$user' OR user_mail='$user') AND user_password='$encriptada'";
 $q_usuarios = mysqli_query($link, $q);
+echo $q;
 
 echo "$q";
 
