@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 30-10-2018 a las 14:14:03
+-- Tiempo de generación: 31-10-2018 a las 20:17:08
 -- Versión del servidor: 10.1.31-MariaDB
 -- Versión de PHP: 7.2.3
 
@@ -62,15 +62,17 @@ CREATE TABLE `indicencias` (
   `asunto` text COLLATE utf8_spanish2_ci NOT NULL,
   `fecha_ini` datetime DEFAULT NULL,
   `fecha_fin` datetime DEFAULT NULL,
-  `descripcion` text COLLATE utf8_spanish2_ci
+  `descripcion` text COLLATE utf8_spanish2_ci,
+  `estado` text COLLATE utf8_spanish2_ci
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish2_ci;
 
 --
 -- Volcado de datos para la tabla `indicencias`
 --
 
-INSERT INTO `indicencias` (`id_incidencia`, `id_recurso`, `id_user`, `tipo_incidencia`, `asunto`, `fecha_ini`, `fecha_fin`, `descripcion`) VALUES
-(11, 1, 2, 4, 'dfgfhjklññ', '2018-10-29 00:00:00', NULL, 'fgxhghj,k.lm-_:');
+INSERT INTO `indicencias` (`id_incidencia`, `id_recurso`, `id_user`, `tipo_incidencia`, `asunto`, `fecha_ini`, `fecha_fin`, `descripcion`, `estado`) VALUES
+(11, 1, 2, 4, 'dfgfhjklññ', '2018-10-29 00:00:00', '2018-10-31 19:30:12', 'fgxhghj,k.lm-_:', '1'),
+(12, 2, 1, 3, 'La sala esta mal', '2018-10-30 16:31:55', '2018-10-31 19:30:25', 'No va', '1');
 
 -- --------------------------------------------------------
 
@@ -93,9 +95,9 @@ CREATE TABLE `recurso` (
 
 INSERT INTO `recurso` (`id_recurso`, `nom_recur`, `descripcion`, `img_src`, `categoria`, `disponibilidad`) VALUES
 (1, 'Sala Pollos Hermanos', 'Sala multidisciplinaria con 7, pizzarra digital LED táctil. Tiene enchufes y connexion a la red de alta velocidad.\r\nEquipada on 8 altavoces Bose con la tecnología Dobly Digital Atmosfera 7.1. Tiene tambien la posibilidad de conectrar un micrófono a los altavoces.', '../images/Multidisciplinar/imagen1.jpg', 1, 0),
-(2, 'Sala Bromo', 'Sala multidisciplinaria de 25m ', '../images/Multidisciplinar/imagen2.jpg', 1, 1),
-(3, 'Sala Boro', 'Sala multidisciplinaria con 4 mesas 16 sillas, armario equipado con juegos de mesa y una pizarra magnética.', '../images/Multidisciplinar/imagen3.jpg', 1, 0),
-(4, 'Sala Albuquerque', 'Sala multidisciplinaria con 4 mesas 16 sillas, armario equipado con juegos de mesa y una pizarra magnética.', '../images/Multidisciplinar/imagen4.jpg', 1, 1),
+(2, 'Sala Bromo', 'Sala multidisciplinaria de 25m ', '../images/Multidisciplinar/imagen2.jpg', 1, 0),
+(3, 'Sala Boro', 'Sala multidisciplinaria con 4 mesas 16 sillas, armario equipado con juegos de mesa y una pizarra magnética.', '../images/Multidisciplinar/imagen3.jpg', 1, 1),
+(4, 'Sala Albuquerque', 'Sala multidisciplinaria con 4 mesas 16 sillas, armario equipado con juegos de mesa y una pizarra magnética.', '../images/Multidisciplinar/imagen4.jpg', 1, 0),
 (5, 'Sala de informática JAVA', 'Sala de informática equipada con 50 ordenadores de ultima generación para que los alumnos puedan desarrollar las diferentes actividades', '../images/Informatica/imagen1.jpg', 2, 0),
 (6, 'Sala de informatica HTML', 'Sala de informática equipada con 60 ordenadores con la que los alumnos podrán desarrollar las diferentes actividades  ', '../images/Informatica/imagen2.jpg', 2, 0),
 (7, 'Salón de Actos la niña bonita', 'Salón de actos equipado con 50 sillas, escenario con cortinas, luces, extintores y armarios con diversos objetos.', '../images/Salonactos/imagen1.jpg', 5, 0),
@@ -122,16 +124,20 @@ CREATE TABLE `reservas` (
   `id_user` int(11) NOT NULL,
   `id_recurso` int(11) DEFAULT NULL,
   `fecha_ini` datetime DEFAULT NULL,
-  `fecha_fin` date DEFAULT NULL
+  `fecha_fin` datetime DEFAULT NULL,
+  `Estado` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish2_ci;
 
 --
 -- Volcado de datos para la tabla `reservas`
 --
 
-INSERT INTO `reservas` (`id_reserva`, `id_user`, `id_recurso`, `fecha_ini`, `fecha_fin`) VALUES
-(2, 2, 1, '2018-10-26 19:41:05', '2018-10-09'),
-(3, 1, 2, '2018-10-26 17:37:54', NULL);
+INSERT INTO `reservas` (`id_reserva`, `id_user`, `id_recurso`, `fecha_ini`, `fecha_fin`, `Estado`) VALUES
+(2, 2, 1, '2018-10-26 19:41:05', NULL, 0),
+(3, 1, 2, '2018-10-26 17:37:54', '2018-10-31 19:16:42', 1),
+(4, 1, 2, '2018-10-31 19:18:13', '2018-10-31 19:42:32', 1),
+(5, 1, 3, '2018-10-31 19:23:48', '2018-10-31 19:42:34', 1),
+(6, 1, 4, '2018-10-31 19:37:30', NULL, 0);
 
 -- --------------------------------------------------------
 
@@ -198,7 +204,10 @@ CREATE TABLE `users` (
 
 INSERT INTO `users` (`id_user`, `user`, `permisos`, `user_name`, `user_surname`, `user_mail`, `user_telf`, `user_password`, `user_img`) VALUES
 (1, 'dperez', 1, 'David', 'Perez', 'd.perez@gmail.com', '666999333', '81dc9bdb52d04dc20036dbd8313ed055', NULL),
-(2, 'test', 1, 'test', 'Admin', 'test@test.com', '696699696', '81dc9bdb52d04dc20036dbd8313ed055', NULL);
+(2, 'test', 1, 'test', 'Admin', 'test@test.com', '696699696', '81dc9bdb52d04dc20036dbd8313ed055', NULL),
+(3, 'jramon', 1, 'Juan', 'Alvarez', 'j.alvarez@gmail.com', '665889754', '81dc9bdb52d04dc20036dbd8313ed055', NULL),
+(4, 'agonzalez', 2, 'Adrian', 'Gonzalez', 'a.gonzalez@gmail.com', '672451489', '81dc9bdb52d04dc20036dbd8313ed055', NULL),
+(5, 'marias', 3, 'Manolo', 'Arias', 'm.arias@gmail.com', '663547582', '81dc9bdb52d04dc20036dbd8313ed055', NULL);
 
 --
 -- Índices para tablas volcadas
@@ -272,7 +281,7 @@ ALTER TABLE `categorias`
 -- AUTO_INCREMENT de la tabla `indicencias`
 --
 ALTER TABLE `indicencias`
-  MODIFY `id_incidencia` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+  MODIFY `id_incidencia` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
 --
 -- AUTO_INCREMENT de la tabla `recurso`
@@ -284,7 +293,7 @@ ALTER TABLE `recurso`
 -- AUTO_INCREMENT de la tabla `reservas`
 --
 ALTER TABLE `reservas`
-  MODIFY `id_reserva` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id_reserva` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT de la tabla `tipo_incidencia`
@@ -302,7 +311,7 @@ ALTER TABLE `tipo_user`
 -- AUTO_INCREMENT de la tabla `users`
 --
 ALTER TABLE `users`
-  MODIFY `id_user` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id_user` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- Restricciones para tablas volcadas
