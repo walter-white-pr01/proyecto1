@@ -1,0 +1,116 @@
+/*general*/
+* {
+    position: relative;
+  }
+html, body {
+		margin: 0px;
+        width: 100%;
+        min-height: 100%;
+        /*height: auto !important;*/
+        height: 100%;
+        font-size: 1em;
+}
+.centrar{
+	width: 100%;
+	display: flex;
+	justify-content: center;
+	height: 100%;
+}
+.centrarV{
+	display: flex;
+    justify-content: center;
+    align-content: center;
+    flex-direction: column;
+    height: 100%;
+}
+.ancho{
+	width: 1200px;v
+}
+
+/*Login*/
+.login{
+	background: url(../images/background_index.jpg);
+	background-repeat: no-repeat;
+	background-size: cover;
+}
+.form{
+	background: #fff;
+	border-radius: 5px;
+	text-align: center;
+	padding: 25px;
+}
+.form input{
+	/*display: block;*/
+	margin: auto;
+	width: 80%;
+	margin-top: 10px;
+	margin-bottom: 20px;
+	padding: 3px;
+	height: auto;
+	font-size: 1.1em;
+	line-height: 36px;
+	background: #f7f7f7;
+	border-radius:4px;
+	border-style: solid;
+	border-color: #d1dc25;
+
+}
+.form input:focus{
+	border-color: rgb(32, 178, 170);
+    outline: 0px;
+    border-style: solid;
+}
+.form img{
+	margin: 58px;
+}
+.btn {
+    margin: auto!important;
+    width: 30%!important;
+    background: transparent!important;
+    border: 2px solid lightseagreen!important;
+    border-radius: 5px;
+    color: lightseagreen;
+    line-height: 24px;
+    transition: 0.4s all;
+    cursor: pointer;
+    border-color: 
+}
+.btn:hover {
+    background: lightseagreen!important;
+    border: 2px solid lightseagreen!important;
+    border-radius: 5px;
+    color: #fff;
+}
+.btn:focus {
+    outline: 0px none;
+}
+/*movil*/
+@media only screen and (max-width: 768px) {
+    *{
+		position: initial;
+	}
+	.centrar{
+	width: 100%;
+	display: initial;
+	justify-content: initial;
+	height: 100%;
+	}
+	.centrarV{
+		display: initial;
+	    justify-content: initial;
+	    align-content: initial;
+	    flex-direction: initial;
+	    height: 100%;
+	    width: 100%
+	}
+	.form{
+		width: 100%;
+		height: 100%;
+		font-size: 72px;
+	}
+	.form input {
+	    height: auto;
+	    font-size: 25px;
+	}
+}
+
